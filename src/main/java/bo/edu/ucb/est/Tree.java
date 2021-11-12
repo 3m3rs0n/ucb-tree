@@ -14,7 +14,7 @@ public class Tree<D extends Comparable<D>> {
         this.root = root;
     }
 
-    public void add2(D data) {
+    public void add(D data) {
         Node<D> newNode = new Node<>(data);
         if ( root == null) { // arbol vacio
             root = newNode;
@@ -50,18 +50,20 @@ public class Tree<D extends Comparable<D>> {
 //        Paso 3 − Recorre recursivamente el subarbol derecho.
 
     public static void printInOrder(Node<?> root) {
-        if( root.getLeft() != null){
+        if( root.getLeft() != null){ //        Paso 1 − Recorre recursivamente el subarbol izquierdo.
             printInOrder(root.getLeft());
             System.out.println(root.getData());
         }else{
-            System.out.println(root.getData());
+            System.out.println(root.getData());//                Paso 2 − Visitamos el nodo raíz.
         }
         if( root.getRight() != null){
-            printInOrder(root.getRight());
+            printInOrder(root.getRight());//        Paso 3 − Recorre recursivamente el subarbol derecho.
         }
     }
 
-    public void add(D data){
+    //Practicando
+
+    public void add2(D data){
         Node<D> newNode = new Node<>(data);
         if ( root == null) { // arbol vacio
             root = newNode;
