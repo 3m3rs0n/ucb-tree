@@ -1,21 +1,21 @@
 package bo.edu.ucb.est;
 
 public class Tree<D extends Comparable<D>> {
-    private Node root;
+    private Node<D> root;
 
     public Tree() {
     }
 
-    public Node getRoot() {
+    public Node<D> getRoot() {
         return root;
     }
 
-    public void setRoot(Node root) {
+    public void setRoot(Node<D> root) {
         this.root = root;
     }
 
-    public void add(D data) {
-        Node newNode = new Node(data);
+    public void add2(D data) {
+        Node<D> newNode = new Node<>(data);
         if ( root == null) { // arbol vacio
             root = newNode;
         } else {
@@ -44,13 +44,47 @@ public class Tree<D extends Comparable<D>> {
         }
     }
 
-    public static void printInOrder(Node<?> root) {
-//        Hasta que todos los nodos hayan sido atravesados −
+    //        Hasta que todos los nodos hayan sido atravesados −
 //        Paso 1 − Recorre recursivamente el subarbol izquierdo.
 //                Paso 2 − Visitamos el nodo raíz.
 //        Paso 3 − Recorre recursivamente el subarbol derecho.
-        System.out.println(root.getData());
-        printInOrder(root.getLeft());
 
+    public static void printInOrder(Node<?> root) {
+        if( root.getLeft() != null){
+            printInOrder(root.getLeft());
+            System.out.println(root.getData());
+        }else{
+            System.out.println(root.getData());
+        }
+        if( root.getRight() != null){
+            printInOrder(root.getRight());
+        }
+    }
+
+    public void add(D data){
+        Node<D> newNode = new Node<>(data);
+        if ( root == null) { // arbol vacio
+            root = newNode;
+        }else{
+            for( Node<D> current=root; current!=null;){
+                if(current.getData().compareTo(data)>0){
+                    if(current.getLeft()==null){
+                        current.setLeft(newNode);
+                        break;
+                    }else{
+                        current = current.getLeft();
+                    }
+                }else if(current.getData().compareTo(data) < 0){
+                    if(current.getRight()==null){
+                        current.setRight(newNode);
+                        break;
+                    }else{
+                        current = current.getRight();
+                    }
+                }else{
+                    break;
+                }
+            }
+        }
     }
 }
