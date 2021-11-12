@@ -61,6 +61,27 @@ public class Tree<D extends Comparable<D>> {
         }
     }
 
+    public static void printPreOrder(Node<?> root){
+        System.out.println(root.getData());
+        if( root.getLeft()!=null){
+            printPreOrder(root.getLeft());
+        }
+        if( root.getRight()!=null){
+            printPreOrder(root.getRight());
+        }
+    }
+
+    public static void printPostOrder(Node<?> root){
+        if( root.getLeft() != null){
+            printPostOrder(root.getLeft());
+        }
+        if( root.getRight() != null){
+            printPostOrder(root.getRight());
+        }
+        System.out.println(root.getData());
+        
+    }
+
     //Practicando
 
     public void add2(D data){
