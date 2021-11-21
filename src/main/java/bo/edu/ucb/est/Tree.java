@@ -95,20 +95,9 @@ public class Tree<D extends Comparable<D>> {
      * @param data
      */
     public void remove(D data) {
-        Node<D> nodoAEliminar = null;
-        Node<D> nodoAnterior = null;
-        for( Node<D> current=root; current!=null ;){ //recorrido
-            if(current.getData().compareTo(data)>0){
-                nodoAnterior = current;
-                current = current.getLeft();
-            } else if(current.getData().compareTo(data)<0){
-                nodoAnterior = current;
-                current = current.getRight();
-            } else{
-                nodoAEliminar = current;
-                break;
-            }
-        }
+        Node<D> nodoAEliminar = obtenerNodo(data);
+        Node<D> nodoAnterior = obtenerPadre(data);
+     
         if(nodoAEliminar.getRight()== null && nodoAEliminar.getLeft()== null){ //caso 1. El nodo a eliminar es una hoja
             if(nodoAnterior.getLeft()==nodoAEliminar){
                 nodoAnterior.setLeft(null);
@@ -117,36 +106,69 @@ public class Tree<D extends Comparable<D>> {
             }
         }else{//caso 3. El nodo a eliminar tiene dos hijos
             if(nodoAEliminar.getRight()!=null && nodoAEliminar.getLeft()!=null){
-                Node<D> minNode = null;
-                for( Node<D> current=nodoAEliminar.getRight(); current!=null ;){//Recorremos hasta dar con el minNode
-                    minNode = current;
-                    current = current.getLeft();
-                }
-                System.out.println(minNode.getData());
+                Node<D> minNode = obtenerMinNode(nodoAEliminar);
                 remove(minNode.getData());
-                minNode.setRight(nodoAEliminar.getRight());
-                minNode.setLeft(nodoAEliminar.getLeft());
-                if(nodoAnterior.getLeft()==nodoAEliminar){
-                    nodoAnterior.setLeft(minNode);
-                }else{
-                    nodoAnterior.setRight(minNode);
-                }
+                nodoAEliminar.setData(minNode.getData());
             }else{//caso 2. Cuando tiene solo un hijo
-                if(nodoAnterior.getLeft()==nodoAEliminar){
-                    if(nodoAEliminar.getRight()== null && nodoAEliminar.getLeft()!= null){
-                        nodoAnterior.setLeft(nodoAEliminar.getLeft());
-                    }else if(nodoAEliminar.getRight()!= null && nodoAEliminar.getLeft()== null){
-                        nodoAnterior.setLeft(nodoAEliminar.getRight());
-                    }
+                Node<D> hijo = obtenerUnicoHijo(nodoAEliminar);
+                if(nodoAnterior.getLeft()==nodoAEliminar){ // Inge por alguna razon que no entiendo cuando uso el metodo .equals en esta parte me sale nullPointerException
+                    nodoAnterior.setLeft(hijo);
                 }else{
-                    if(nodoAEliminar.getRight()== null && nodoAEliminar.getLeft()!= null){
-                        nodoAnterior.setRight(nodoAEliminar.getLeft());
-                    }else if(nodoAEliminar.getRight()!= null && nodoAEliminar.getLeft()== null){
-                        nodoAnterior.setRight(nodoAEliminar.getRight());
-                    }
+                    nodoAnterior.setRight(hijo);
                 }
             }
         }
+    }
+
+    public Node<D> obtenerUnicoHijo(Node<D> nodo){
+        Node<D> hijo = null;
+        if(nodo.getLeft()!=null){
+            hijo = nodo.getLeft();
+        }else{
+            hijo = nodo.getRight();
+        }
+        return hijo;
+    }
+
+    public Node<D> obtenerMinNode(Node<D> nodoAEliminar){
+        Node<D> minNode= null;
+        for( Node<D> current=nodoAEliminar.getRight(); current!=null ;){
+            minNode = current;
+            current = current.getLeft();
+        }
+        return minNode;
+    }
+
+    public Node<D> obtenerNodo(D data){
+        Node<D> NodoAObtener = null;
+        for( Node<D> current=root; current!=null ;){ //recorrido
+            if(current.getData().compareTo(data)>0){
+                current = current.getLeft();
+            } else if(current.getData().compareTo(data)<0){
+                current = current.getRight();
+            } else{
+                NodoAObtener = current;
+                break;
+            }
+        }
+        return NodoAObtener;
+    }
+
+
+    public Node<D> obtenerPadre(D data){
+        Node<D> padre = null;
+        for( Node<D> current=root; current!=null ;){ //recorrido
+            if(current.getData().compareTo(data)>0){
+                padre = current;
+                current = current.getLeft();
+            } else if(current.getData().compareTo(data)<0){
+                padre = current;
+                current = current.getRight();
+            } else{
+                break;
+            }
+        }
+        return  padre;
     }
 
 

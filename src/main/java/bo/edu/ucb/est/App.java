@@ -10,35 +10,24 @@ public class App
 {
     public static void main( String[] args )  {
         Tree<Integer> tree = new Tree<Integer>();
-        tree.add2(15);
-        tree.add2(9);
-        tree.add2(16);
-        tree.add2(2);
-        tree.add2(1);
-        tree.add2(5);
-        tree.add2(12);
-        tree.add2(11);
-        tree.add2(14);
-        tree.add2(16);
+        tree.add2(50);
         tree.add2(20);
-        tree.add2(19);
-        tree.add2(22);
+        tree.add2(40);
+        tree.add2(35);
+        tree.add2(70);
+        tree.add2(80);
+        tree.add2(60);
+        tree.add2(90);
+
 
         System.out.println("========InOrder=========");
         Tree.printInOrderNonRecursive(tree.getRoot());
         System.out.println("FIN");
 
-        tree.remove(9);
+        tree.remove(40);
 
         System.out.println("========InOrder=========");
         Tree.printInOrderNonRecursive(tree.getRoot());
-        System.out.println("FIN");
-
-        System.out.println("======PreOrder=========");
-        Tree.printPreOrder(tree.getRoot());
-        System.out.println("FIN");
-        System.out.println("======PostOrder=========");
-        Tree.printPostOrder(tree.getRoot());
         System.out.println("FIN");
 
         Stack<String> stringStack = new Stack<>();
